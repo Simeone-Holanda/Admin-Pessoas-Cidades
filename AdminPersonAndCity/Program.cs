@@ -1,3 +1,6 @@
+using AdminPersonAndCity.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace AdminPersonAndCity
 {
     public class Program
@@ -8,6 +11,15 @@ namespace AdminPersonAndCity
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Configuração para o banco de dados
+            var configuration = builder.Configuration;
+
+            builder.Services.AddDbContext<ConnectionContext>(options =>
+            {
+                options.UseNpgsql(configuration.GetConnectionString("Database"));
+            });
+
 
             var app = builder.Build();
 
