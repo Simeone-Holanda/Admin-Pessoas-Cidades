@@ -12,7 +12,7 @@ namespace AdminPersonAndCity.Repositories.Interfaces
 
         PersonModel? FindById(int id);
 
-        PersonModel? FindByCpfCnpj(int id);
+        PersonModel? FindByCpfCnpj(string cpfCnpj);
 
         bool Remove(int id);
     }

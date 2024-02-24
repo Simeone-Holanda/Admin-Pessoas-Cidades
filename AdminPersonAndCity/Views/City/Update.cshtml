@@ -1,0 +1,23 @@
+﻿@model CityModel
+@{
+    ViewData["Title"] = "Atualização De Cidade";
+}
+
+<div class="d-flex flex-column align-items-center w-100 ">
+    <h1> Atualizar @Model.Name </h1>
+    <form class="w-75 border rounded p-5" asp-controller="City" asp-action="Update" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label for="Name" class="form-label">Nome</label>
+            <input type="text" asp-for="Name" class="form-control" placeholder="Campina Grande">
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div class="mb-3">
+            <label for="costOfLiving" class="form-label">Estado</label>
+            <input type="text" asp-for="State" class="form-control" placeholder="Paraíba - (PB)">
+            @Html.ValidationMessageFor(x => x.State)
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Atualizar</button>
+        <a class="btn btn-secondary w-100 mt-2" asp-action="Index" asp-controller="City">Voltar</a>
+    </form>
+</div>

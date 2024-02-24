@@ -54,5 +54,7 @@ namespace AdminPersonAndCity.Models
 
         // Substitui dataCadastro
         public DateTime CreatedAt { get; set; }
+
+        public DateTime UpdatedAt { get; set; }
     }
 }

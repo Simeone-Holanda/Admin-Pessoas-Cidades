@@ -6,7 +6,7 @@ namespace AdminPersonAndCity.Repositories.Interfaces
     {
         CityModel Insert(CityModel city);
 
-        CityModel Update(CityModel city, int id);
+        CityModel Update(CityModel city);
 
         List<CityModel> FindAll();
 

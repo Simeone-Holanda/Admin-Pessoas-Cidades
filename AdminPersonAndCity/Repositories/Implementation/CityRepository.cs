@@ -41,6 +41,7 @@ namespace AdminPersonAndCity.Repositories.Implementation
 
             if (hasCity != null) throw new Exception("Nome da cidade já existe no sistema. ");
 
+            city.CreatedAt = DateTime.UtcNow;
             _connectionContext.Cities.Add(city);
             _connectionContext.SaveChanges();
             return city;
@@ -54,15 +55,21 @@ namespace AdminPersonAndCity.Repositories.Implementation
             return true;
         }
 
-        public CityModel Update(CityModel city, int id)
+        public CityModel Update(CityModel city)
         {
-            CityModel? hasCity = FindById(id);
-            CityModel? hasNewCity = FindByName(city.Name);
+            CityModel? hasCity = FindById(city.Id);
+
             if (hasCity == null) throw new Exception("Nenhuma pessoa com esse Id foi encontrado. ");
 
-            if (hasNewCity != null) throw new Exception($"A cidade {city.Name} já existe no sistema. "); 
-            hasCity.Name = hasCity.Name;
-            hasCity.State = hasCity.State;
+            if (hasCity.Name != city.Name)
+            {
+                CityModel? hasNewCity = FindByName(city.Name);
+                if (hasNewCity != null) throw new Exception($"A cidade {city.Name} já existe no sistema. ");
+            }
+
+            hasCity.Name = city.Name;
+            hasCity.State = city.State;
+            hasCity.UpdatedAt = DateTime.UtcNow;
 
             _connectionContext.Cities.Update(hasCity);
             _connectionContext.SaveChanges();

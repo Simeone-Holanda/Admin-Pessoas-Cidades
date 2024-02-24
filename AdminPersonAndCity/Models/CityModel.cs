@@ -15,11 +15,11 @@ namespace AdminPersonAndCity.Models
         [Required(ErrorMessage = "Estado é obrigatório")]
         public string State { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
 
-        public List<PersonModel> Persons { get; set; }
+        public List<PersonModel>? Persons { get; set; }
 
     }
 }
