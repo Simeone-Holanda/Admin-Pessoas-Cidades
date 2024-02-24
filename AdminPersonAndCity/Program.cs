@@ -1,4 +1,6 @@
 using AdminPersonAndCity.Data;
+using AdminPersonAndCity.Repositories.Implementation;
+using AdminPersonAndCity.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdminPersonAndCity
@@ -20,6 +22,8 @@ namespace AdminPersonAndCity
                 options.UseNpgsql(configuration.GetConnectionString("Database"));
             });
 
+            builder.Services.AddScoped<ICityRepository, CityRepository>();
+            builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
             var app = builder.Build();
 
