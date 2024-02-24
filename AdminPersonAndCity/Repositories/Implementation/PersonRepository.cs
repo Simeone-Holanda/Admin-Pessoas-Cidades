@@ -52,9 +52,9 @@ namespace AdminPersonAndCity.Repositories.Implementation
             return true;
         }
 
-        public PersonModel Update(PersonModel person, int id)
+        public PersonModel Update(PersonModel person)
         {
-            PersonModel? hasPerson = FindById(id);
+            PersonModel? hasPerson = FindById(person.Id);
             if (hasPerson == null) throw new Exception("Nenhuma pessoa com esse Id foi encontrado. ");
 
             hasPerson.Email = person.Email;

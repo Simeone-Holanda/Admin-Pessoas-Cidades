@@ -50,7 +50,7 @@ namespace AdminPersonAndCity.Controllers
                 return View(city);
             } catch(Exception error)
             {
-//                TempData["ErrorMessage"] = $"Ops,Não foi possível encontrar a cidade. ";
+                TempData["ErrorMessage"] = $"Ops, ocorreu um erro, tente novamente. Erro: {error.Message} ";
                 return RedirectToAction("Index");
             }
 

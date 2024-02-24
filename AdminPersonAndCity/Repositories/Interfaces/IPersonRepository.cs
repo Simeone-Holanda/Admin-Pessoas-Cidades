@@ -6,7 +6,7 @@ namespace AdminPersonAndCity.Repositories.Interfaces
     {
         PersonModel Insert(PersonModel person);
 
-        PersonModel Update(PersonModel person, int id);
+        PersonModel Update(PersonModel person);
 
         List<PersonModel> FindAll();
 
