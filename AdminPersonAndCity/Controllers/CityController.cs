@@ -35,21 +35,25 @@ namespace AdminPersonAndCity.Controllers
             return View(city);
         }
 
-        public IActionResult ConfirmPassword(int id)
-        {
-            return View();
-        }
-
         public IActionResult ConfirmDelete(int id)
         {
-            CityModel? city = _cityRepository.FindById(id);
-
-            if (city == null)
+            try
             {
-                return View();
+                CityModel? city = _cityRepository.FindById(id);
+
+                if (city == null)
+                {
+                    TempData["ErrorMessage"] = $"Ops,Não foi possível encontrar a cidade. ";
+                    return RedirectToAction("Index");
+                }
+
+                return View(city);
+            } catch(Exception error)
+            {
+//                TempData["ErrorMessage"] = $"Ops,Não foi possível encontrar a cidade. ";
+                return RedirectToAction("Index");
             }
 
-            return View(city);
         }
         public IActionResult Delete(int id)
         {

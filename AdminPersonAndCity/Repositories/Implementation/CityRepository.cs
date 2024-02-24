@@ -52,6 +52,8 @@ namespace AdminPersonAndCity.Repositories.Implementation
             CityModel? hasCity = FindById(id);
             if (hasCity == null) throw new Exception("Nenhuma cidade com esse Id foi encontrado. ");
 
+            _connectionContext.Cities.Remove(hasCity);
+            _connectionContext.SaveChanges();
             return true;
         }
 
