@@ -1,0 +1,103 @@
+﻿@model AdminPersonAndCity.ViewModel.CreatePersonViewModel
+@{
+    ViewData["Title"] = "Atualização De Pessoa";
+}
+
+<div class="d-flex flex-column align-items-center w-100 ">
+    <h1> Atualizar @Model.Person.Name </h1>
+    <form class="w-75 border rounded p-5" asp-controller="Person" asp-action="Update" method="post">
+
+        <input type="hidden" asp-for="Person.Id" class="form-control" maxlength="70">
+
+        <div class="mb-3">
+            <label for="Name" class="form-label">Nome</label>
+            <input type="text" asp-for="Person.Name" class="form-control" placeholder="Simeone" maxlength="70">
+            @Html.ValidationMessageFor(x => x.Person.Name)
+        </div>
+        
+        <div class="mb-3">
+            <label for="PersonType" class="form-label">Tipo de Pessoa</label>
+            <select asp-for="Person.PersonType" class="form-control">
+                <option value="@AdminPersonAndCity.Models.Enums.PersonEnum.JU" 
+                  selected="@(Model.Person.PersonType == AdminPersonAndCity.Models.Enums.PersonEnum.JU ? true : false)">  
+                        JURÍDICA 
+                </option>
+                <option selected="@(Model.Person.PersonType == AdminPersonAndCity.Models.Enums.PersonEnum.JU ? true : false)"
+                    value="@AdminPersonAndCity.Models.Enums.PersonEnum.FI"> FÍSICA </option>
+            </select>
+            @Html.ValidationMessageFor(x => x.Person.PersonType)
+        </div>
+        
+       <div class="mb-3">
+            <input oninput="applyCpfMask(this)"
+                   type="hidden" asp-for="Person.CpfCnpj" class="form-control">
+            @Html.ValidationMessageFor(x => x.Person.CpfCnpj)
+        </div>
+        <div class="mb-3">
+            <label for="Cep" class="form-label">Cep</label>
+            <input type="text" asp-for="Person.Cep" class="form-control" placeholder="12345678" maxlength="8">
+            @Html.ValidationMessageFor(x => x.Person.Cep)
+        </div>
+
+        <div class="mb-3">
+            <label for="address" class="form-label">Endereço</label>
+            <input type="text" asp-for="Person.Address" class="form-control" placeholder="Rua X" maxlength="100">
+            @Html.ValidationMessageFor(x => x.Person.Address)
+        </div>
+        <div class="mb-3">
+            <label for="Number" class="form-label">Número</label>
+            <input type="number" asp-for="Person.Number" class="form-control">
+            @Html.ValidationMessageFor(x => x.Person.Number)
+        </div>
+        <div class="mb-3">
+            <label for="Compl" class="form-label">Complemento</label>
+            <input type="text" asp-for="Person.Compl" class="form-control" maxlength="20" placeholder="Proximo ao ponto Y">
+            @Html.ValidationMessageFor(x => x.Person.Compl)
+        </div>
+        <div class="mb-3">
+            <label for="District" class="form-label">Bairro</label>
+            <input type="text" asp-for="Person.District" class="form-control" maxlength="50" placeholder="BAIRRO DO Z">
+            @Html.ValidationMessageFor(x => x.Person.District)
+        </div>
+     
+        <div class="mb-3">
+            <input type="hidden" asp-for="Person.BirthDateFoundation" class="form-control">
+            @Html.ValidationMessageFor(x => x.Person.BirthDateFoundation)
+        </div>
+        
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input type="text" asp-for="Person.Email" class="form-control" maxlength="50" placeholder="simeone@gmail.com">
+            @Html.ValidationMessageFor(x => x.Person.Email)
+        </div>
+        <div class="mb-3">
+            <label for="Phone" class="form-label">Telefone</label>
+            <input oninput="applyPhoneMask(this)"
+                   type="text" asp-for="Person.Phone" class="form-control" maxlength="20" placeholder="(11) 98888-7777">
+            @Html.ValidationMessageFor(x => x.Person.Phone)
+        </div>
+        <div class="mb-3">
+            <label for="RegStatus" class="form-label">Situação cadastral</label>
+            <select asp-for="Person.RegStatus" class="form-control">
+                <option value="@AdminPersonAndCity.Models.Enums.RegistrationStatusEnum.A"
+                        selected="@(Model.Person.RegStatus == AdminPersonAndCity.Models.Enums.RegistrationStatusEnum.A ? true : false)"> ATIVO </option>
+                <option value="@AdminPersonAndCity.Models.Enums.RegistrationStatusEnum.I"
+                        selected="@(Model.Person.RegStatus == AdminPersonAndCity.Models.Enums.RegistrationStatusEnum.I ? true : false)"> INATIVO </option>
+            </select>
+            @Html.ValidationMessageFor(x => x.Person.RegStatus)
+        </div>
+        <div class="mb-3">
+            <label for="CityId" class="form-label">Cidade</label>
+            <select asp-for="Person.CityId" class="form-control">
+                @foreach (var city in Model.Cities)
+                {
+                    <option value="@city.Id"
+                            selected="@(Model.Person.CityId == city.Id ? true : false)">@city.Name - ( @city.State )</option>
+                }
+            </select>
+            <p class="w-100 text-end">Não encontrou a cidade ? <a asp-action="Create" asp-controller="City">Atualizar Cidade</a> </p>
+            @Html.ValidationMessageFor(x => x.Person.CityId)
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Atualizar</button>
+    </form>
+</div>

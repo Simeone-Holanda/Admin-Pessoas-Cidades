@@ -1,5 +1,6 @@
 ﻿using AdminPersonAndCity.Models;
 using AdminPersonAndCity.Repositories.Interfaces;
+using AdminPersonAndCity.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -23,10 +24,14 @@ namespace AdminPersonAndCity.Controllers
             return View(persons);
         }
 
-        public IActionResult Create()
-        {
-            List<CityModel> cities = _cityRepository.FindAll();
-            return View(cities);
+        public IActionResult Create() {
+        
+            CreatePersonViewModel viewModel = new CreatePersonViewModel
+            {
+                Person = new PersonModel(), // Instância vazia do modelo Person
+                Cities = _cityRepository.FindAll() // Supondo que você tenha um método para obter a lista de cidades
+            };
+            return View(viewModel);
         }
 
         public IActionResult Update(int id)
@@ -37,7 +42,13 @@ namespace AdminPersonAndCity.Controllers
                 TempData["errorMessage"] = "Pessoa não encontrada";
                 return RedirectToAction("Index", "Person");
             }
-            return View(person);
+            CreatePersonViewModel viewModel = new CreatePersonViewModel
+            {
+                Person = person, // Instância vazia do modelo Person
+                Cities = _cityRepository.FindAll() // Supondo que você tenha um método para obter a lista de cidades
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult ConfirmDelete(int id)
@@ -81,12 +92,18 @@ namespace AdminPersonAndCity.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    person.BirthDateFoundation = person.BirthDateFoundation.ToUniversalTime();
                     _personRepository.Insert(person);
                     TempData["successMessage"] = "Pessoa Adicionado com sucesso. ";
                     return RedirectToAction("Index", "Person");
                 }
 
-                return View(person);
+                CreatePersonViewModel viewModel = new CreatePersonViewModel()
+                {
+                    Person = person, // Instância vazia do modelo Person
+                    Cities = _cityRepository.FindAll() // Supondo que você tenha um método para obter a lista de cidades
+                };
+                return View(viewModel);
             }
             catch (Exception error)
             {
@@ -106,8 +123,12 @@ namespace AdminPersonAndCity.Controllers
                     TempData["successMessage"] = "Pessoa Atualizado com sucesso. ";
                     return RedirectToAction("Index", "Person");
                 }
-
-                return View(person);
+                CreatePersonViewModel viewModel = new CreatePersonViewModel()
+                {
+                    Person = person, // Instância vazia do modelo Person
+                    Cities = _cityRepository.FindAll() // Supondo que você tenha um método para obter a lista de cidades
+                };
+                return View(viewModel);
             }
             catch (Exception error)
             {

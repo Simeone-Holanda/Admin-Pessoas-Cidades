@@ -15,6 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Person\ConfirmDelete.cshtml" />
+    <None Include="Views\Person\Create.cshtml" />
+    <None Include="Views\Person\Index.cshtml" />
+    <None Include="Views\Person\Update.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>

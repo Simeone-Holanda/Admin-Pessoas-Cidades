@@ -47,14 +47,14 @@ namespace AdminPersonAndCity.Models
         [Required(ErrorMessage = "Situação cadastral da pessoa é obrigatório")]
         public RegistrationStatusEnum RegStatus { get; set; }
 
-        // [Required(ErrorMessage = "Cídade da pessoa é obrigatório")]
+        // [Required(ErrorMessage = "Cidade da pessoa é obrigatório")]
         public int CityId { get; set; }
 
-        public CityModel City { get; set; }
+        public CityModel? City { get; set; }
 
         // Substitui dataCadastro
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

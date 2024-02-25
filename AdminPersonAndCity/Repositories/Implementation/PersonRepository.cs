@@ -1,6 +1,7 @@
 ﻿using AdminPersonAndCity.Data;
 using AdminPersonAndCity.Models;
 using AdminPersonAndCity.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminPersonAndCity.Repositories.Implementation
 {
@@ -15,7 +16,7 @@ namespace AdminPersonAndCity.Repositories.Implementation
 
         public List<PersonModel> FindAll()
         {
-            return _connectionContext.Persons.ToList();
+            return _connectionContext.Persons.Include(p => p.City).ToList();
         }
 
         public PersonModel? FindByCpfCnpj(string cpfCnpj)
@@ -37,9 +38,11 @@ namespace AdminPersonAndCity.Repositories.Implementation
         public PersonModel Insert(PersonModel person)
         {
             PersonModel? hasPerson = FindByCpfCnpj(person.CpfCnpj);
-            if (hasPerson == null) throw new Exception("Cpf ou Cnpj já existe no sistema. ");
+            if (hasPerson != null) throw new Exception("Cpf ou Cnpj já existe no sistema. ");
 
-            _connectionContext.Add(hasPerson);
+            person.CreatedAt = DateTime.UtcNow;
+            person.UpdatedAt = DateTime.UtcNow;
+            _connectionContext.Persons.Add(person);
             _connectionContext.SaveChanges();
             return person;
         }
@@ -57,12 +60,20 @@ namespace AdminPersonAndCity.Repositories.Implementation
             PersonModel? hasPerson = FindById(person.Id);
             if (hasPerson == null) throw new Exception("Nenhuma pessoa com esse Id foi encontrado. ");
 
-            hasPerson.Email = person.Email;
+
+            hasPerson.Name = person.Name;
+            hasPerson.PersonType = person.PersonType;
+            hasPerson.Cep = person.Cep;
             hasPerson.Address = person.Address;
             hasPerson.Number = person.Number;
             hasPerson.Compl = person.Compl;
             hasPerson.District = person.District;
-            hasPerson.City = person.City;
+
+            hasPerson.Phone = person.Phone;
+            hasPerson.RegStatus = person.RegStatus;
+            hasPerson.CityId = person.CityId;
+
+            hasPerson.UpdatedAt = DateTime.UtcNow;
 
             _connectionContext.Persons.Update(hasPerson);
             _connectionContext.SaveChanges();
