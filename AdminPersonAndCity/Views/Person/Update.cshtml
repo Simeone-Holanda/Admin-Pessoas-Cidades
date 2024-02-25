@@ -15,18 +15,6 @@
             @Html.ValidationMessageFor(x => x.Person.Name)
         </div>
         
-        <div class="mb-3">
-            <label for="PersonType" class="form-label">Tipo de Pessoa</label>
-            <select asp-for="Person.PersonType" class="form-control">
-                <option value="@AdminPersonAndCity.Models.Enums.PersonEnum.JU" 
-                  selected="@(Model.Person.PersonType == AdminPersonAndCity.Models.Enums.PersonEnum.JU ? true : false)">  
-                        JURÍDICA 
-                </option>
-                <option selected="@(Model.Person.PersonType == AdminPersonAndCity.Models.Enums.PersonEnum.JU ? true : false)"
-                    value="@AdminPersonAndCity.Models.Enums.PersonEnum.FI"> FÍSICA </option>
-            </select>
-            @Html.ValidationMessageFor(x => x.Person.PersonType)
-        </div>
         
        <div class="mb-3">
             <input oninput="applyCpfMask(this)"

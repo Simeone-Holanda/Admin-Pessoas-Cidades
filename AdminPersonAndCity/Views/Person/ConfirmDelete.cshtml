@@ -1,14 +1,14 @@
-﻿@model CityModel
+﻿@model PersonModel
 @{
     ViewData["Title"] = "Confirme o apagar";
 }
 
 
-<h2> Deseja realmente deletar a cidade @Model.Name ?</h2>
+<h2> Deseja realmente deletar o usuário @Model.Name ?</h2>
 
 <div>
 <a class="btn btn-danger w-100" role="button"
     asp-action="Index" asp-controller="City"> Cancelar </a>
 <a  class="btn btn-primary w-100 mt-3" role="button"
-    asp-action="Delete" asp-controller="City" asp-route-id="@Model.Id"> Confirmar </a>
+    asp-action="Delete" asp-controller="Person" asp-route-id="@Model.Id"> Confirmar </a>
 </div>

@@ -1,4 +1,5 @@
 ﻿using AdminPersonAndCity.Models.Enums;
+using AdminPersonAndCity.Validations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,6 +17,7 @@ namespace AdminPersonAndCity.Models
         public PersonEnum PersonType { get; set; }
 
         [Required(ErrorMessage = "Cpf/Cnpj da pessoa é obrigatório")]
+        [ValidCpfCnpj]
         public string CpfCnpj { get; set; }
 
 
@@ -56,5 +58,13 @@ namespace AdminPersonAndCity.Models
         public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
+
+        public void formatCpjCnpj()
+        {
+            if(PersonType == PersonEnum.JU)
+                CpfCnpj = CpfCnpj.Replace(".", "").Replace("-", "").Replace("/", "");
+            else
+                CpfCnpj = CpfCnpj.Replace(".", "").Replace("-", "")
+        }
     }
 }

@@ -52,6 +52,8 @@ namespace AdminPersonAndCity.Repositories.Implementation
             PersonModel? hasPerson = FindById(id);
             if (hasPerson == null) throw new Exception("Nenhuma pessoa com esse Id foi encontrado. ");
 
+            _connectionContext.Persons.Remove(hasPerson);
+            _connectionContext.SaveChanges();
             return true;
         }
 

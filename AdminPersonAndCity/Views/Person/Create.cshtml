@@ -15,17 +15,21 @@
         </div>        
         <div class="mb-3">
             <label for="PersonType" class="form-label">Tipo de Pessoa</label>
-            <select asp-for="Person.PersonType" class="form-control">
+            <select id="personType" asp-for="Person.PersonType" class="form-control" oninput="resetCpfCnpj()">
                 <option value="@AdminPersonAndCity.Models.Enums.PersonEnum.JU"> JURÍDICA </option>
-                <option value="@AdminPersonAndCity.Models.Enums.PersonEnum.FI"> FíSICA </option>
+                <option value="@AdminPersonAndCity.Models.Enums.PersonEnum.FI"> FÍSICA </option>
             </select>
             @Html.ValidationMessageFor(x => x.Person.PersonType)
         </div>
      
         <div class="mb-3">
             <label for="CpfCnpj" class="form-label">Cpf/Cnpj</label>
-            <input oninput="applyCpfMask(this)"
-                   type="text" asp-for="Person.CpfCnpj" class="form-control" placeholder="123-456-789-77" maxlength="14">
+            <input id="cpfCnpjInput"
+                   oninput="applyCpfOrCnpjMask(this)"
+                   type="text" 
+                   asp-for="Person.CpfCnpj" 
+                   class="form-control" 
+                   placeholder="00.000.000/000">
             @Html.ValidationMessageFor(x => x.Person.CpfCnpj)
         </div>
 

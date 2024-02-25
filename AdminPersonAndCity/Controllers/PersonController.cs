@@ -93,6 +93,7 @@ namespace AdminPersonAndCity.Controllers
                 if (ModelState.IsValid)
                 {
                     person.BirthDateFoundation = person.BirthDateFoundation.ToUniversalTime();
+                    person.formatCpjCnpj();
                     _personRepository.Insert(person);
                     TempData["successMessage"] = "Pessoa Adicionado com sucesso. ";
                     return RedirectToAction("Index", "Person");
@@ -125,8 +126,8 @@ namespace AdminPersonAndCity.Controllers
                 }
                 CreatePersonViewModel viewModel = new CreatePersonViewModel()
                 {
-                    Person = person, // Instância vazia do modelo Person
-                    Cities = _cityRepository.FindAll() // Supondo que você tenha um método para obter a lista de cidades
+                    Person = person,
+                    Cities = _cityRepository.FindAll()
                 };
                 return View(viewModel);
             }
