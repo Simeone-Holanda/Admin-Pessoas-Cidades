@@ -24,6 +24,17 @@ namespace AdminPersonAndCity.Controllers
             return View(persons);
         }
 
+        public IActionResult GetPerson(int id, string pertionView)
+        {
+            PersonModel? person = _personRepository.FindById(id);
+            if (person == null)
+            {
+                TempData["ErrorMessage"] = $"Ops, não conseguimos capturar as informações, tente novamente.";
+                return RedirectToAction("Index");
+            }
+            return PartialView(pertionView, person);
+        }
+
         public IActionResult Create() {
         
             CreatePersonViewModel viewModel = new CreatePersonViewModel

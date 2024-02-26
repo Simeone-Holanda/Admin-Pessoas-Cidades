@@ -1,4 +1,32 @@
-﻿$('.close-alert').click(function () {
+﻿$(document).ready(function () {
+    var personId = null
+    var buttonDownload = document.getElementById("download-visible");
+    $('.report').click(function () {
+
+        personId = $(this).attr('person-id');
+        $('#modal-report').modal("show");
+    });
+    $('#button-report-simple').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'Person/GetPerson/' + personId + "?pertionView=_SimpleReport", success: function (result) {
+                $("#report-content").html(result);
+                buttonDownload.style.display = "block";
+            }
+        })
+    })
+    $('#button-report-complet').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'Person/GetPerson/' + personId + "?pertionView=_CompletReport", success: function (result) {
+                    $("#report-content").html(result);
+                    buttonDownload.style.display = "block";
+                }
+            })
+        })
+})
+
+$('.close-alert').click(function () {
     $('.alert').hide('hide');
 })
 
@@ -54,4 +82,15 @@ function resetCpfCnpj() {
     else {
         input.placeholder = "00.000.000/000"
     }
+}
+
+function generatePDF() {
+    const report = document.getElementById('reportSimple');
+    const options = {
+        margin: [10, 10, 10, 10],
+        filename: "RelatorioSimples.pdf",
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    }
+    html2pdf().set(options).from(report).save();
 }

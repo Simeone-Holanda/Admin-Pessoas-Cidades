@@ -32,6 +32,7 @@ namespace AdminPersonAndCity.Repositories.Implementation
             return _connectionContext
                     .Persons
                     .Where(person => person.Id == id)
+                    .Include(person => person.City)
                     .FirstOrDefault();
         }
 

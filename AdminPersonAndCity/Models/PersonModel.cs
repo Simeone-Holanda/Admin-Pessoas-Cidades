@@ -64,7 +64,7 @@ namespace AdminPersonAndCity.Models
             if(PersonType == PersonEnum.JU)
                 CpfCnpj = CpfCnpj.Replace(".", "").Replace("-", "").Replace("/", "");
             else
-                CpfCnpj = CpfCnpj.Replace(".", "").Replace("-", "")
+                CpfCnpj = CpfCnpj.Replace(".", "").Replace("-", "");
         }
     }
 }

@@ -1,0 +1,102 @@
+﻿@model PersonModel
+
+
+<div id="reportSimple" class="w-75 border align-content-center rounded-top w-100">
+
+    <div class="w-100 border d-flex justify-content-around ">
+        <h3>Relatório Completo</h3>
+    </div>
+    <div class="w-100 d-flex align-items-end">
+        <h5 class="ms-2 m-0">Dados Pessoais</h5>
+    </div>
+    <div class="w-100 border d-flex justify-content-around flex-wrap">
+        <span class="text-center d-flex flex-column">
+            <b><span>Nome</span></b>
+            <span>@Model.Name</span>
+        </span>
+        <span class="text-center d-flex flex-column">
+            <b><span>CPF</span></b>
+            <span>@Model.CpfCnpj</span>
+        </span>
+        <span class="text-center d-flex flex-column">
+            <b><span>Tipo de Pessoa</span></b>
+            <span>@(Model.PersonType == AdminPersonAndCity.Models.Enums.PersonEnum.JU ? "JURÍDICA" : "FÍSICA")</span>
+        </span>
+        <div class="w-100 d-flex justify-content-around">
+            <span class=" text-center d-flex flex-column">
+                <b><span>Data de Nascimento</span></b>
+                <span>@Model.BirthDateFoundation.ToString("dd/MM/yyyy")</span>
+            </span>
+            <span class=" d-flex flex-column text-center">
+                <b><span>Situação cadastral</span></b>
+                <span>@(Model.RegStatus == AdminPersonAndCity.Models.Enums.RegistrationStatusEnum.A ? "ATIVA" : "Inativa")</span>
+            </span>
+        </div>
+    </div>
+    <div class="w-100 d-flex align-items-end mt-2">
+        <h5 class="ms-2 m-0">Informações de contato</h5>
+    </div>
+    <div class="w-100 border d-flex justify-content-around ">
+        <span class="w-100 text-center d-flex flex-column">
+            <b><span>Telefone</span></b>
+            <span>@Model.Phone</span>
+        </span>
+        <span class="w-100 text-center d-flex flex-column">
+            <b><span>Email</span></b>
+            <span>@Model.Email</span>
+        </span>
+    </div>
+    <div class="w-100 d-flex align-items-end mt-2">
+        <h5 class="ms-2 m-0">Informações de Endereço</h5>
+    </div>
+    <div class="w-100 border d-flex justify-content-around flex-wrap p-2">
+        <div class="w-100 d-flex justify-content-around">
+            <span class="w-25 text-center d-flex flex-column">
+                <b><span>CEP</span></b>
+                <span>@Model.Cep</span>
+            </span>
+            <span class="w-50 text-center d-flex flex-column">
+                <b><span>Cidade</span></b>
+                <span>@Model?.City?.Name</span>
+            </span>
+            <span class="w-25 text-center d-flex flex-column">
+                <b> <span>Estado</span></b>
+                <span>@Model?.City?.State</span>
+            </span>
+        </div>
+        <div class="w-100 d-flex justify-content-around">
+            <span class="w-25 text-center d-flex flex-column">
+                <b> <span>Número</span></b>
+                <span>@Model.Number</span>
+            </span>
+            <span class="w-50 text-center d-flex flex-column">
+                <b> <span>Endereço</span></b>
+                <span>@Model.Address</span>
+            </span>
+            <span class="w-25 text-center d-flex flex-column">
+                <b> <span>Bairro</span></b>
+                <span>@Model.District</span>
+            </span>
+
+        </div>
+        <span class="w-100 d-flex flex-column mt-2">
+            <b> <span>Complemento</span></b>
+            <span>@Model.Compl</span>
+        </span>
+
+    </div>
+    <div class="w-100 d-flex align-items-end mt-2">
+        <h5 class="ms-2 m-0">Resumo</h5>
+    </div>
+    <p style="text-align: justify; padding: 5px;">
+        O indivíduo registrado é identificado como @Model.Name, uma pessoa @(Model.PersonType == AdminPersonAndCity.Models.Enums.PersonEnum.JU ? "JURÍDICA": "FÍSICA") com CPF/Cnpj @Model.CpfCnpj,
+        cujo nascimento foi em @Model.BirthDateFoundation.ToString("dd/MM/yyy"). No momento, a situação cadastral encontra-se @(Model.RegStatus == AdminPersonAndCity.Models.Enums.RegistrationStatusEnum.A ? "ATIVA" : "Inativa").
+        Para comunicação, estão disponíveis as seguintes opções: ligar para o número @Model.Phone ou
+        enviar um e-mail para @Model.Email .
+        Referente ao endereço, a residência está localizada na cidade de @Model?.City?.Name,
+        situada no estado da @Model?.City?.State, com CEP @Model?.Cep. O endereço completo é @Model?.Address,
+        número @Model?.Number, no bairro @Model?.District. O complemento do endereço é @Model?.Compl. Este relatório 
+        fornece uma síntese dos dados pessoais e de endereço disponíveis.
+    </p>
+</div>
+

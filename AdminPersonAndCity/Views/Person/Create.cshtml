@@ -46,7 +46,7 @@
         </div>
         <div class="mb-3">
             <label for="Number" class="form-label">Número</label>
-            <input type="number" asp-for="Person.Number" class="form-control" value="0">
+            <input type="number" asp-for="Person.Number" class="form-control">
             @Html.ValidationMessageFor(x => x.Person.Number)
         </div>        
         <div class="mb-3">
@@ -84,7 +84,7 @@
             @Html.ValidationMessageFor(x => x.Person.RegStatus)
         </div>   
         <div class="mb-3">
-            <label for="CityId" class="form-label">Situação cadastral</label>
+            <label for="CityId" class="form-label">Cidade</label>
             <select asp-for="Person.CityId" class="form-control">
                 @foreach (var city in Model.Cities)
                 {

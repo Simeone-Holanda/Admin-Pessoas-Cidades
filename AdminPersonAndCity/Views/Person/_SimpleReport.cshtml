@@ -1,0 +1,41 @@
+﻿@model PersonModel
+
+
+<div id="reportSimple" class="w-100 border align-content-center rounded-top">
+
+    <div class="w-100 border d-flex justify-content-around ">
+        <h3>Relatório Simples</h3>
+    </div>
+    <div class="w-100 d-flex align-items-end">
+        <h5 class="ms-2 m-0">Dados Pessoais</h5>
+    </div>
+    <div class="w-100 border d-flex justify-content-around ">
+        <span class="w-100 text-center d-flex flex-column">
+            <b><span>Nome</span></b>
+            <span>@Model.Name</span>
+        </span>
+        <span class="w-100 text-center d-flex flex-column">
+            <b><span>CPF</span></b>
+            <span>@Model.CpfCnpj</span>
+        </span>
+    </div>
+    <div class="w-100 border d-flex justify-content-around ">
+        <span class="w-100 text-center d-flex flex-column">
+            <b><span>Telefone</span></b>
+            <span>@Model.Phone</span>
+        </span>
+        <span class="w-100 text-center d-flex flex-column">
+            <b><span>Email</span></b>
+            <span>@Model.Email</span>
+        </span>
+    </div>
+    <div class="w-100 border d-flex justify-content-around ">
+        <span class="w-100 text-center d-flex flex-column">
+            <b><span>Cidade</span></b>
+            <span>@Model?.City?.Name</span>
+        </span>
+        <span class="w-100 text-center d-flex flex-column">
+            <b> <span>Estado</span></b>            <span>@Model?.City?.State</span>
+        </span>
+    </div>
+</div>
