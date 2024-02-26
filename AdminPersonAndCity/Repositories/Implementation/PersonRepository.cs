@@ -65,7 +65,6 @@ namespace AdminPersonAndCity.Repositories.Implementation
 
 
             hasPerson.Name = person.Name;
-            hasPerson.PersonType = person.PersonType;
             hasPerson.Cep = person.Cep;
             hasPerson.Address = person.Address;
             hasPerson.Number = person.Number;
