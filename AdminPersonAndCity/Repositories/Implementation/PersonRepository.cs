@@ -73,6 +73,7 @@ namespace AdminPersonAndCity.Repositories.Implementation
 
             hasPerson.Phone = person.Phone;
             hasPerson.RegStatus = person.RegStatus;
+            hasPerson.Email = person.Email;
             hasPerson.CityId = person.CityId;
 
             hasPerson.UpdatedAt = DateTime.UtcNow;
