@@ -83,9 +83,10 @@
                             selected="@(Model.Person.CityId == city.Id ? true : false)">@city.Name - ( @city.State )</option>
                 }
             </select>
-            <p class="w-100 text-end">Não encontrou a cidade ? <a asp-action="Create" asp-controller="City">Atualizar Cidade</a> </p>
+            <p class="w-100 text-end">Não encontrou a cidade ? <a asp-action="Create" asp-controller="City">Criar Cidade</a> </p>
             @Html.ValidationMessageFor(x => x.Person.CityId)
         </div>
         <button type="submit" class="btn btn-primary w-100">Atualizar</button>
+        <a class="btn btn-secondary w-100 mt-2" asp-action="Index" asp-controller="Person">Voltar</a>
     </form>
 </div>

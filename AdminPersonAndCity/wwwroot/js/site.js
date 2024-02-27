@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿var reportSelected = "simple-report"
+$(document).ready(function () {
     var personId = null
     var buttonDownload = document.getElementById("download-visible");
 
@@ -13,29 +14,69 @@
     });
 
     $('#button-report-simple').click(function () {
-        $.ajax({
-            type: 'GET',
-            url: 'Person/GetPerson/' + personId + "?pertionView=_SimpleReport", success: function (result) {
-                $("#report-content").html(result);
-                buttonDownload.style.display = "block";
-            }
-        })
+        reportSelected = "simple-report"
+        getPerson(personId, "_SimpleReport")
+        buttonDownload.style.display = "block";
     })
     $('#button-report-complet').click(function () {
-            $.ajax({
-                type: 'GET',
-                url: 'Person/GetPerson/' + personId + "?pertionView=_CompletReport", success: function (result) {
-                    $("#report-content").html(result);
-                    buttonDownload.style.display = "block";
-                }
-            })
-        })
+        reportSelected = "report-complet"
+        getPerson(personId, "_CompletReport")
+        buttonDownload.style.display = "block";
+    })
+
+    $(document).on("input", "#input-cep", function () {
+        var cep = $(this).val()
+        console.log(cep)
+        if (cep.length === 8) { // Verifica se o CEP tem 8 dígitos
+            checkCep(cep);
+        } 
+    });
 })
 
 $('.close-alert').click(function () {
     $('.alert').hide('hide');
 })
 
+function getPerson(personId ,pationView) {
+    $.ajax({
+        type: 'GET',
+        url: 'Person/GetPerson/' + personId + "?pertionView=" + pationView, success: function (result) {
+            $("#report-content").html(result);
+ 
+        }
+    })
+}
+
+// Verifica o cep
+function checkCep(cep) {
+    $.ajax({
+        type: 'GET',
+        url: `https://viacep.com.br/ws/${cep}/json/`, success: function (result) {
+            $("#report-content").html(result);
+            let addressInput = document.getElementById("input-address")
+            let complementInput = document.getElementById("input-complement")
+            let districtInput = document.getElementById("input-district")
+            let selectCities = document.getElementById("select-city")
+
+            if (result.logradouro)
+                addressInput.value = result.logradouro
+            if (result.bairro)
+                districtInput.value = result.bairro
+            if (result.complemento)
+                complementInput.value = result.complemento
+
+
+            for (var i = 0; i < selectCities.options.length; i++) {
+                if (selectCities.options[i].text === result.localidade) {
+                    selectCities.selectedIndex = i;
+                    break; 
+                }
+            }
+        }
+    })
+}
+
+// Gerencia a mascara e aplica para cpf/cnpj
 function applyCpfOrCnpjMask(input) {
     var personType = document.getElementById("personType").value
     if (personType === "FI") {
@@ -47,7 +88,7 @@ function applyCpfOrCnpjMask(input) {
     }
 }
 
-// Masca para cpf
+// Masca para Cpf
 function applyCpfMask(input) {
 
     var value = input.value;
@@ -57,7 +98,7 @@ function applyCpfMask(input) {
     value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
     input.value = value;
 }
-
+// Mascara para Cnpj
 function applyCnpjMask(input) {
     var value = input.value;
     value = value.replace(/\D/g, "");
@@ -77,6 +118,7 @@ function applyPhoneMask(input) {
     input.value = value;
 }
 
+// Mascara para Reseta mascara
 function resetCpfCnpj() {
     var input = document.getElementById("cpfCnpjInput")
     input.value = ""
@@ -90,8 +132,9 @@ function resetCpfCnpj() {
     }
 }
 
+// Gera pdf com base em um html
 function generatePDF() {
-    const report = document.getElementById('report-content');
+    const report = document.getElementById(reportSelected);
     const options = {
         margin: [10, 10, 10, 10],
         filename: "Relatório.pdf",
@@ -101,6 +144,7 @@ function generatePDF() {
     html2pdf().set(options).from(report).save();
 }
 
+// Aplica DataTable na tabela com id passado
 function getDatatable(id) {
     $(id).DataTable({
         "ordering": true,

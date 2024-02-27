@@ -12,29 +12,30 @@ namespace AdminPersonAndCity.Validations
             if (value == null) return new ValidationResult("Cpf/Cnpj inválido.");
 
             PersonModel? objectPersonModel = (PersonModel)validationContext.ObjectInstance;
-            Console.WriteLine(objectPersonModel.PersonType);
+            
             if (objectPersonModel.PersonType == PersonEnum.FI)
             {
                 return ValidToCpf(value);
             }
             else
             {
-                Console.WriteLine("Estou no else");
                 return ValidCnpj(value);
             }
 
         }
         public ValidationResult ValidToCpf(object value)
         {
-            string w = value.ToString().Replace(".", "").Replace("-", "");
+            if(value == null) return new ValidationResult("Cpf é obrigatório. ");
 
-            if (w.Distinct().Count() == 1) return new ValidationResult("Cpf inválido. ");
-            if (!w.All(char.IsDigit)) return new ValidationResult("Cpf/Cnpj deve conter apenas dígitos. ");
-            if (w.Length != 11) return new ValidationResult("Cpf/Cnpj deve conter 11 dígitos.");
+            string cpf = value.ToString().Replace(".", "").Replace("-", "");
 
-            if (w[9] != CalcDigtCpf(w, 9)) return new ValidationResult("Cpf inválido.");
+            if (cpf.Distinct().Count() == 1) return new ValidationResult("Cpf inválido. ");
+            if (!cpf.All(char.IsDigit)) return new ValidationResult("Cpf/Cnpj deve conter apenas dígitos. ");
+            if (cpf.Length != 11) return new ValidationResult("Cpf/Cnpj deve conter 11 dígitos.");
 
-            if (w[10] != CalcDigtCpf(w, 10)) return new ValidationResult("Cpf inválido.");
+            if (cpf[9] != CalcDigtCpf(cpf, 9)) return new ValidationResult("Cpf inválido.");
+
+            if (cpf[10] != CalcDigtCpf(cpf, 10)) return new ValidationResult("Cpf inválido.");
 
             return ValidationResult.Success;
         }
@@ -54,6 +55,7 @@ namespace AdminPersonAndCity.Validations
 
         public ValidationResult ValidCnpj(object value)
         {
+            if (value == null) return new ValidationResult("Cnpj é obrigatório. ");
             string cnpj = value.ToString().Replace(".", "").Replace("-", "").Replace("/", "");
 
             Console.WriteLine(cnpj);
@@ -67,16 +69,14 @@ namespace AdminPersonAndCity.Validations
                 return new ValidationResult("Cnpj deve conter 14 dígitos.");
 
 
-            int[] firstDigit = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-            int[] secondDigit = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] firstWeights = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] secondWeights = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 
-            Console.WriteLine(CalcDigtCnpj(cnpj, 12, firstDigit));
-            Console.WriteLine(CalcDigtCnpj(cnpj, 13, secondDigit));
 
-            if (cnpj[12] != CalcDigtCnpj(cnpj, 12, firstDigit))
+            if (cnpj[12] != CalcDigtCnpj(cnpj, 12, firstWeights))
                 return new ValidationResult("Cnpj inválido.");
 
-            if (cnpj[13] != CalcDigtCnpj(cnpj, 13, secondDigit))
+            if (cnpj[13] != CalcDigtCnpj(cnpj, 13, secondWeights))
                 return new ValidationResult("Cnpj inválido.");
 
             return ValidationResult.Success;

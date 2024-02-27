@@ -1,7 +1,7 @@
 ﻿@model PersonModel
 
 
-<div id="reportSimple" class="w-75 border align-content-center rounded-top w-100">
+<div id="report-complet" class="w-100 border align-content-center rounded-top w-100">
 
     <div class="w-100 border d-flex justify-content-around ">
         <h3>Relatório Completo</h3>
@@ -91,8 +91,7 @@
     <p style="text-align: justify; padding: 5px;">
         O indivíduo registrado é identificado como @Model.Name, uma pessoa @(Model.PersonType == AdminPersonAndCity.Models.Enums.PersonEnum.JU ? "JURÍDICA": "FÍSICA") com CPF/Cnpj @Model.CpfCnpj,
         cujo nascimento foi em @Model.BirthDateFoundation.ToString("dd/MM/yyy"). No momento, a situação cadastral encontra-se @(Model.RegStatus == AdminPersonAndCity.Models.Enums.RegistrationStatusEnum.A ? "ATIVA" : "Inativa").
-        Para comunicação, estão disponíveis as seguintes opções: ligar para o número @Model.Phone ou
-        enviar um e-mail para @Model.Email .
+        Para comunicação, estão disponíveis as seguintes opções: número @Model.Phone ou e-mail para @Model.Email .
         Referente ao endereço, a residência está localizada na cidade de @Model?.City?.Name,
         situada no estado da @Model?.City?.State, com CEP @Model?.Cep. O endereço completo é @Model?.Address,
         número @Model?.Number, no bairro @Model?.District. O complemento do endereço é @Model?.Compl. Este relatório 
