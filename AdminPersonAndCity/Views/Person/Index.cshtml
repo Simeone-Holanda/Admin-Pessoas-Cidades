@@ -14,6 +14,7 @@
 @if (TempData["errorMessage"] != null)
 {
     <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
         @TempData["errorMessage"]
     </div>
 }
