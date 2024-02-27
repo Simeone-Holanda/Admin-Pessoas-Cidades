@@ -58,7 +58,6 @@ namespace AdminPersonAndCity.Validations
             if (value == null) return new ValidationResult("Cnpj é obrigatório. ");
             string cnpj = value.ToString().Replace(".", "").Replace("-", "").Replace("/", "");
 
-            Console.WriteLine(cnpj);
             if (cnpj.Distinct().Count() == 1)
                 return new ValidationResult("Cnpj inválido. ");
 

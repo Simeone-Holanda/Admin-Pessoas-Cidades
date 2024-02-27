@@ -44,7 +44,7 @@
 
                     <th scope="row">@user.Id</th>
                     <td class="text-center">@user.Name</td>
-                    <td class="text-center">@user.CpfCnpj</td>
+                    <td class="text-center cpfCnpj">@user.CpfCnpj</td>
                     <td class="text-center">
                         @(user.PersonType == AdminPersonAndCity.Models.Enums.PersonEnum.JU ? "JURÍDICA" : "FÍSICA")
                     </td>

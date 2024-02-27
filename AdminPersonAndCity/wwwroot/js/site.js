@@ -42,7 +42,7 @@ function getPerson(personId ,pationView) {
         type: 'GET',
         url: 'Person/GetPerson/' + personId + "?pertionView=" + pationView, success: function (result) {
             $("#report-content").html(result);
- 
+
         }
     })
 }
@@ -182,3 +182,42 @@ function getDatatable(id) {
         }
     });
 }
+
+var elements = document.querySelectorAll('.cpfCnpj');
+
+function applyMask() {
+    console.log('carreguei')
+    elements.forEach(function (element) {
+        console.log(element)
+        var cpfCnpj = element.textContent;
+        if (cpfCnpj.length === 11) {
+            var cpfMask = applyCpfMaskInText(cpfCnpj);
+            element.textContent = cpfMask
+        } else if (cpfCnpj.length === 14) {
+            var cnpjMask = applyCnpjMaskInText(cpfCnpj);
+            element.textContent = cnpjMask;
+        }
+    });
+}
+
+
+// Mascara para Cpf para texto
+function applyCpfMaskInText(cpf) {
+
+    cpf = cpf.replace(/\D/g, "");
+    cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+    cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+    cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    return cpf
+}
+// Mascara para Cnpj para texto
+function applyCnpjMaskInText(cnpj) {
+    cnpj = cnpj.replace(/\D/g, "");
+    cnpj = cnpj.replace(/^(\d{2})(\d)/, "$1.$2");
+    cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+    cnpj = cnpj.replace(/\.(\d{3})(\d)/, ".$1/$2");
+    cnpj = cnpj.replace(/(\d{4})(\d)/, "$1-$2");
+    return cnpj
+}
+
+applyMask()

@@ -68,7 +68,8 @@ namespace AdminPersonAndCity.Controllers
 
             if (person == null)
             {
-                return View();
+                TempData["ErrorMessage"] = "Pessoa não encontrada. ";
+                return RedirectToAction("Index");
             }
 
             return View(person);

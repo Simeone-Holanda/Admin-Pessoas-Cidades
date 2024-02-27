@@ -59,7 +59,7 @@ namespace AdminPersonAndCity.Models
 
         public DateTime? UpdatedAt { get; set; }
 
-        public void formatCpjCnpj()
+        public void FormatCpjCnpj()
         {
             if(PersonType == PersonEnum.JU)
                 CpfCnpj = CpfCnpj.Replace(".", "").Replace("-", "").Replace("/", "");
