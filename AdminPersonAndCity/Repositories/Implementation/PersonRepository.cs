@@ -1,6 +1,7 @@
 ﻿using AdminPersonAndCity.Data;
 using AdminPersonAndCity.Models;
 using AdminPersonAndCity.Repositories.Interfaces;
+using AdminPersonAndCity.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdminPersonAndCity.Repositories.Implementation
@@ -58,7 +59,7 @@ namespace AdminPersonAndCity.Repositories.Implementation
             return true;
         }
 
-        public PersonModel Update(PersonModel person)
+        public PersonModel Update(UpdateUserViewModel person)
         {
             PersonModel? hasPerson = FindById(person.Id);
             if (hasPerson == null) throw new Exception("Nenhuma pessoa com esse Id foi encontrado. ");

@@ -6,6 +6,61 @@ $(document).ready(function () {
     getDatatable("#table-persons")
     getDatatable("#table-cities")
 
+
+
+    $('#open-modal-createcity').click(function () {
+
+        personId = $(this).attr('person-id');
+        $('#modal-create-city').modal("show");
+
+    });
+    $('#button-createcity-modal').click(function () {
+        var city = document.getElementById("CityName")
+        var state = document.getElementById("CityState")
+        console.log(!city.value && city.value === "")
+        console.log(city.value)
+        console.log(state.value)
+        if (!city.value && !state.value) {
+            alertErrorCity("Cidade e Estado é obrigatório. ")
+        }
+        else if (!city.value || city.value === "") {
+            alertErrorCity("Cidade é obrigatório. ")
+        }
+        else if (!state.value || city.value === "") {
+            alertErrorCity("Estado é obrigatório. ")
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/City/CreateInModal/',
+                data: {
+                    Name: city.value,
+                    State: state.value,
+                },
+                success: function (result) {
+                    var select = document.getElementById("select-city");
+                    var newOption = document.createElement("option");
+                    newOption.value = result.id
+                    newOption.text = result.name
+                    newOption.selected = true
+                    select.appendChild(newOption);
+
+                    var alertSuccess = document.getElementById("alert-success");
+
+                    alertSuccess.style.display = "block"
+
+                    setTimeout(() => {
+                        $('#modal-create-city').modal("hide");
+                    }, 1500)
+
+                }, error: (xhr, status, error) => {
+                    console.log(xhr.responseText)
+                    alertErrorCity(xhr.responseText)
+
+                }
+            })
+        }
+    })
+
     $('.report').click(function () {
 
         personId = $(this).attr('person-id');
@@ -36,6 +91,14 @@ $(document).ready(function () {
 $('.close-alert').click(function () {
     $('.alert').hide('hide');
 })
+
+function alertErrorCity(message) {
+    var alertError = document.getElementById("alert-error");
+    var alertErrorText = document.getElementById("alert-error-text");
+
+    alertError.style.display = "block"
+    alertErrorText.textContent = message
+}
 
 function getPerson(personId ,pationView) {
     $.ajax({

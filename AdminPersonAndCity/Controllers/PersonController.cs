@@ -127,7 +127,7 @@ namespace AdminPersonAndCity.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(PersonModel person)
+        public IActionResult Update(UpdateUserViewModel person)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace AdminPersonAndCity.Controllers
                     TempData["successMessage"] = "Pessoa Atualizado com sucesso. ";
                     return RedirectToAction("Index", "Person");
                 }
-                CreatePersonViewModel viewModel = new CreatePersonViewModel()
+                UpdatePersonViewModel viewModel = new UpdatePersonViewModel()
                 {
                     Person = person,
                     Cities = _cityRepository.FindAll()

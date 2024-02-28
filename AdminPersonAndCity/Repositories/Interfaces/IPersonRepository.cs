@@ -1,4 +1,5 @@
 ﻿using AdminPersonAndCity.Models;
+using AdminPersonAndCity.ViewModel;
 
 namespace AdminPersonAndCity.Repositories.Interfaces
 {
@@ -6,7 +7,7 @@ namespace AdminPersonAndCity.Repositories.Interfaces
     {
         PersonModel Insert(PersonModel person);
 
-        PersonModel Update(PersonModel person);
+        PersonModel Update(UpdateUserViewModel person);
 
         List<PersonModel> FindAll();
 

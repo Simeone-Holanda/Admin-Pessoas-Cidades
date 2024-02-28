@@ -1,6 +1,9 @@
 ﻿using AdminPersonAndCity.Models;
+using AdminPersonAndCity.Repositories.Implementation;
 using AdminPersonAndCity.Repositories.Interfaces;
+using AdminPersonAndCity.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace AdminPersonAndCity.Controllers
 {
@@ -46,7 +49,11 @@ namespace AdminPersonAndCity.Controllers
                     TempData["ErrorMessage"] = $"Ops,Não foi possível encontrar a cidade. ";
                     return RedirectToAction("Index");
                 }
-
+                if(city?.Persons?.Count > 0)
+                {
+                    TempData["ErrorMessage"] = $"Foi encontrado {city.Persons.Count} pessoas vinculadas a essa cidade. Logo não é possível deletar. ";
+                    return RedirectToAction("Index");
+                }
                 return View(city);
             } catch(Exception error)
             {
@@ -97,6 +104,30 @@ namespace AdminPersonAndCity.Controllers
                 TempData["ErrorMessage"] = $"Ops, não foi possível adicionar a cidade, tente novamente. Erro: {error.Message} ";
                 return RedirectToAction("Index");
             }
+
+        }
+
+        [HttpPost]
+        public IActionResult CreateInModal(CreateApiCityViewModel city)
+        {
+            try{
+                if (ModelState.IsValid)
+                {
+                    CityModel newCity = new CityModel
+                    {
+                        Name = city.Name,
+                        State = city.State
+                    };
+                    _cityRepository.Insert(newCity);
+                    return Ok(newCity);
+                }
+                return BadRequest();
+            }
+            catch(Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+
 
         }
 

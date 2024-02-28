@@ -1,6 +1,7 @@
 ﻿using AdminPersonAndCity.Data;
 using AdminPersonAndCity.Models;
 using AdminPersonAndCity.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdminPersonAndCity.Repositories.Implementation
 {
@@ -32,6 +33,7 @@ namespace AdminPersonAndCity.Repositories.Implementation
             return _connectionContext
                     .Cities
                     .Where(city => city.Id == id)
+                    .Include(city => city.Persons)
                     .FirstOrDefault();
         }
 

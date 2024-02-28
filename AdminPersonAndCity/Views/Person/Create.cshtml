@@ -91,10 +91,44 @@
                     <option value="@city.Id">@city.Name</option>
                 }
             </select>
-            <p class="w-100 text-end">Não encontrou a cidade ? <a asp-action="Create" asp-controller="City">Criar Cidade</a> </p>
+            <p class="w-100 text-end">Não encontrou a cidade ? <a id="open-modal-createcity" role="button" class="text-primary">Criar Cidade</a> </p>
             @Html.ValidationMessageFor(x => x.Person.CityId)
         </div>
         <button type="submit" class="btn btn-primary w-100">Adicionar</button>
         <a class="btn btn-secondary w-100 mt-2" asp-action="Index" asp-controller="Person">Voltar</a>
     </form>
+</div>
+
+<div id="modal-create-city" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title w-100 text-center">Cadastrar Cidade</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <form class="w-100 border rounded p-5">
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Nome</label>
+                        <input type="text" id="CityName" class="form-control" placeholder="Campina Grande" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="state" class="form-label">Estado</label>
+                        <input type="text" id="CityState" class="form-control" placeholder="Paraíba - (PB)" required>
+                    </div>
+                    <button id="button-createcity-modal" type="button" class="btn btn-primary w-100 mb-4">Adicionar</button>
+                    
+                    <div id="alert-success" class="alert alert-success" role="alert" style="display: none;">
+                        <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+                        <p id="alert-success-text"> Cidade Adicionada com sucesso! </p>
+                    </div>
+
+                    <div id="alert-error" class="alert alert-danger" role="alert" style="display: none;">
+                        <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+                        <p id="alert-error-text"> </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
