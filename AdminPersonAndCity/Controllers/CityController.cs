@@ -96,7 +96,7 @@ namespace AdminPersonAndCity.Controllers
                     TempData["successMessage"] = "Cidade Adicionada com sucesso. ";
                     return RedirectToAction("Index", "City");
                 }
-
+                city.CreatedAt = city.CreatedAt;
                 return View(city);
             }
             catch (Exception error)

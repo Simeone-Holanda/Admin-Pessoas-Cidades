@@ -30,6 +30,7 @@
                    asp-for="Person.CpfCnpj" 
                    class="form-control" 
                    placeholder="00.000.000/000">
+            <p id="input-cpf-error" class="text-danger"></p>
             @Html.ValidationMessageFor(x => x.Person.CpfCnpj)
         </div>
 
@@ -59,9 +60,14 @@
             <input id="input-district"  type="text" asp-for="Person.District" class="form-control" maxlength="50" placeholder="BAIRRO DO Z">
             @Html.ValidationMessageFor(x => x.Person.District)
         </div>        
+        @Model.Person.BirthDateFoundation.
         <div class="mb-3">
             <label for="BirthDateFoundation" class="form-label">Data de Nascimento/Fundação</label>
-            <input type="date" asp-for="Person.BirthDateFoundation" class="form-control" value="">
+            <input 
+                type="date" 
+                asp-for="Person.BirthDateFoundation" 
+                class="form-control" 
+                value="">
             @Html.ValidationMessageFor(x => x.Person.BirthDateFoundation)
         </div>
         <div class="mb-3">
@@ -88,7 +94,7 @@
             <select id="select-city" asp-for="Person.CityId" class="form-control">
                 @foreach (var city in Model.Cities)
                 {
-                    <option value="@city.Id">@city.Name</option>
+                    <option value="@city.Id">@city.Name - ( @city.State )</option>
                 }
             </select>
             <p class="w-100 text-end">Não encontrou a cidade ? <a id="open-modal-createcity" role="button" class="text-primary">Criar Cidade</a> </p>

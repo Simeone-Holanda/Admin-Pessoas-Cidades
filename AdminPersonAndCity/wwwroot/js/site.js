@@ -86,6 +86,18 @@ $(document).ready(function () {
             checkCep(cep);
         } 
     });
+    $(document).on("input", "#cpfCnpjInput", function () {
+        var personType = document.getElementById("personType").value
+        var textError = document.getElementById("input-cpf-error")
+        var cpfCnpj = $(this).val()
+        if (personType === "FI") {
+            textError.textContent = validToCpf(cpfCnpj)
+        } else if (personType === "JU") {
+            textError.textContent = validCnpj(cpfCnpj)
+        } else {
+            textError.textContent = "Selecione o tipo de pessoal"  
+        }
+    });
 })
 
 $('.close-alert').click(function () {
@@ -281,6 +293,61 @@ function applyCnpjMaskInText(cnpj) {
     cnpj = cnpj.replace(/\.(\d{3})(\d)/, ".$1/$2");
     cnpj = cnpj.replace(/(\d{4})(\d)/, "$1-$2");
     return cnpj
+}
+
+
+function validToCpf(value) {
+    if (value === null) return "Cpf é obrigatório.";
+
+    let cpf = value.toString().replace(/\D/g, '');
+
+    if (new Set(cpf).size === 1) return "Cpf inválido.";
+    if (!/^\d+$/.test(cpf)) return "Cpf/Cnpj deve conter apenas dígitos.";
+    if (cpf.length !== 11) return "Cpf/Cnpj deve conter 11 dígitos.";
+
+    if (cpf[9] !== calcDigtCpf(cpf, 9)) return "Cpf inválido.";
+
+    if (cpf[10] !== calcDigtCpf(cpf, 10)) return "Cpf inválido.";
+
+    // return "Validação bem-sucedida.";
+}
+
+function calcDigtCpf(cpf, digitNumber) {
+    let digit = 0;
+    for (let i = 0; i < digitNumber; i++) {
+        digit += parseInt(cpf[i]) * (digitNumber + 1 - i);
+    }
+
+    digit = (11 - (digit % 11)) > 9 ? 0 : (11 - (digit % 11));
+
+    return digit.toString();
+}
+
+function validCnpj(value) {
+    if (value === null) return "Cnpj é obrigatório.";
+    let cnpj = value.replace(/\D/g, '');
+
+    if (new Set(cnpj).size === 1) return "Cnpj inválido.";
+    if (!/^\d+$/.test(cnpj)) return "Cnpj deve conter apenas dígitos.";
+    if (cnpj.length !== 14) return "Cnpj deve conter 14 dígitos.";
+
+    let firstWeights = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    let secondWeights = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+
+    if (cnpj[12] !== calcDigtCnpj(cnpj, 12, firstWeights)) return "Cnpj inválido.";
+    if (cnpj[13] !== calcDigtCnpj(cnpj, 13, secondWeights)) return "Cnpj inválido.";
+
+   // return "Validação bem-sucedida.";
+}
+
+function calcDigtCnpj(cnpj, digitPosition, weights) {
+    let sum = 0;
+    for (let i = 0; i < digitPosition; i++) {
+        sum += parseInt(cnpj[i]) * weights[i];
+    }
+    let remainder = sum % 11;
+    let digit = (remainder < 2) ? 0 : (11 - remainder);
+    return digit.toString();
 }
 
 applyMask()
